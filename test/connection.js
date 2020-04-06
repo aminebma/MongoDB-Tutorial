@@ -18,3 +18,11 @@ before(function(done){
     })
 
 })
+
+//Drop the characters before each test
+beforeEach(function(done){
+    // Drop the collection
+    mongoose.connection.collections.mariochars.drop(function(){
+        done()
+    })
+})
