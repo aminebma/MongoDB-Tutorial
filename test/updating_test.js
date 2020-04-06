@@ -9,7 +9,7 @@ describe('Updating records', function(){
     beforeEach(function(done){
         char = MarioChar({
             name: 'Mario',
-            weight: 60
+            weight: 50
         })
     
         char.save().then(function(){
@@ -22,6 +22,15 @@ describe('Updating records', function(){
         MarioChar.findOneAndUpdate({name:'Mario'}, {name:'Luigi'}, {useFindAndModify: false}).then(function(){
             MarioChar.findOne({_id: char._id}).then(function(result){
                 assert(result.name === 'Luigi')
+                done()
+            })
+        })
+    })
+
+    it('Increments the weight by 1', function(done){
+        MarioChar.updateMany({},{ $inc: { weight:1 }}).then(function(){
+            MarioChar.findOne({name:'Mario'}).then(function(result){
+                assert(result.weight === 51)
                 done()
             })
         })
